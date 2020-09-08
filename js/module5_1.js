@@ -66,18 +66,36 @@ console.log("counterA.value :>> ", counterA.value);
 
 */
 
-/*
+{
+  // const TodoEditor = function (todos = []) {
+  //   this.todos = todos;
+  // };
+  // TodoEditor.prototype.saveTodo = function (todo) {
+  //   this.todos.push(todo);
+  // };
+  // const todoEditor = new TodoEditor();
+  // console.log(todoEditor);
+  // todoEditor.saveTodo({ text: "new todo", title: "new title" });
+  // console.log(todoEditor);
+}
 
-const TodoEditor = function (todos = []) {
-  this.todos = todos;
-};
-TodoEditor.prototype.saveTodo = function (todo) {
-  this.todos.push(todo);
-};
+//
+// =======================================================
+//
 
-const todoEditor = new TodoEditor();
-console.log(todoEditor);
+// Static Properties / methods
 
-todoEditor.saveTodo({ text: "new todo", title: "new title" });
-console.log(todoEditor);
- */
+// const Counter = function ({ initialValue = 0, step = 1 }) {
+//   this.value = initialValue;
+//   this.step = step;
+// };
+// console.dir(Counter);
+
+// Counter.doStuff = function () {
+//   console.log("Doing stuff");
+// };
+
+// Counter.prototype.increment = function () {
+//   this.value += this.step;
+// };
+// console.dir(Counter);
