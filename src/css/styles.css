@@ -69,6 +69,11 @@ body {
 }
 
 /* User Profile */
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .user-profile {
   display: flex;
   align-items: center;
@@ -82,6 +87,9 @@ body {
 
 .user-profile .avatar {
   border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  margin-left: 10px;
 }
 
 .user-profile .info {
@@ -98,6 +106,7 @@ body {
 /* Transaction table */
 
 .transaction-table {
+  margin-top: 10px;
   border-collapse: collapse;
 }
 

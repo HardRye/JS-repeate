@@ -43,3 +43,15 @@ button.addEventListener("click", () => {
   // setActiveItem();
   toggleActiveItem();
 });
+
+/*
+ * Data atributes
+ */
+const magicButton = document.querySelector("button[data-action='magic']");
+console.log("magicButton.dataset.action: ", magicButton.dataset.action);
+
+////////////////////////////////////////////////////
+
+/*
+ * Data atributes
+ */
