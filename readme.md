@@ -4,4 +4,4 @@ for details check branches
 
 current status: 
 - modules 1-6 done
-- module 7 in process
+- module 7 hw in process
