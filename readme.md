@@ -3,5 +3,5 @@ repeating lections and homeworks
 for details check branches
 
 current status: 
-- modules 1-7 done
-- module 8 in process
+- modules 1-8 done
+- module 9 in process
