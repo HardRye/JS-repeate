@@ -38,16 +38,25 @@
 
 // Source
 import galleryItems from "../gallery-items.js";
-// console.log(galleryItems);
 
 // Refs
 const refs = {
   gallery: document.querySelector(".js-gallery"),
   modal: document.querySelector(".js-lightbox"),
+  modalImg: document.querySelector(".lightbox__image"),
+  modalOverlay: document.querySelector(".lightbox__content"),
+  modalCloseButton: document.querySelector(
+    'button[data-action="close-lightbox"]'
+  ),
 };
-// console.log(gallery);
 
-// Создание и рендер разметки по массиву данных и предоставленному шаблону.
+// current image displayed in modal window
+let currentImage = "";
+
+/*
+ * Rendering
+ */
+
 const createMarkup = function (obj) {
   const { preview, original, description } = obj;
   const item = document.createElement("li");
@@ -68,46 +77,35 @@ const createMarkup = function (obj) {
 const fragm = document.createDocumentFragment("dir");
 galleryItems.forEach((el) => {
   const markup = createMarkup(el);
-  // console.log(markup);
   fragm.appendChild(markup);
 });
 
 refs.gallery.appendChild(fragm);
 
-// Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
+/*
+ * Handlers
+ */
 
-function handleClick(e) {
+function handleModalOpen(e) {
   e.preventDefault();
-  // console.dir(e.target);
-  if (e.target.nodeName === "IMG") {
-    openModal();
-    const modalImg = refs.modal.querySelector(".lightbox__image");
-    // console.log(modalImg);
-    modalImg.setAttribute("src", e.target.dataset.source);
-    modalImg.setAttribute("alt", e.target.alt);
+  if (e.target.nodeName !== "IMG") {
+    return;
+  }
+
+  refs.modalImg.setAttribute("src", e.target.dataset.source);
+  refs.modalImg.setAttribute("alt", e.target.alt);
+  openModal();
+  currentImage = e.target.dataset.source;
+}
+
+function handleModalCloseOnButton(e) {
+  if (e.target === refs.modalCloseButton) {
+    closeModal();
   }
 }
 
-function openModal() {
-  refs.modal.classList.add("is-open");
-  window.addEventListener("keydown", handleModalCloseOnEsc);
-}
-
-function closeModal() {
-  refs.modal.classList.remove("is-open");
-  window.removeEventListener("keydown", handleModalCloseOnEsc);
-}
-
-function handleModalCloseOnClick(e) {
-  const button = refs.modal.querySelector(
-    'button[data-action="close-lightbox"]'
-  );
-  // console.dir(e.target);
-  // console.dir(e.target.parentNode);
-  // console.dir(e.currentTarget);
-  // console.dir(e.currentTarget.parentNode);
-
-  if (e.target === button || e.target.parentNode === refs.modal) {
+function handleModalCloseOnOverlay({ target, currentTarget }) {
+  if (target === currentTarget) {
     closeModal();
   }
 }
@@ -118,5 +116,58 @@ function handleModalCloseOnEsc(e) {
   }
 }
 
-refs.gallery.addEventListener("click", handleClick);
-refs.modal.addEventListener("click", handleModalCloseOnClick);
+function handleModalSlider(e) {
+  let nextImageData = "";
+
+  if (e.code === "ArrowRight") {
+    nextImageData = galleryItems.reduce((acc, el, id, arr) => {
+      if (el.original === currentImage) {
+        if (id === arr.length - 1) {
+          acc = arr[0];
+        } else {
+          acc = arr[id + 1];
+        }
+      }
+      return acc;
+    }, 0);
+  } else if (e.code === "ArrowLeft") {
+    nextImageData = galleryItems.reduce((acc, el, id, arr) => {
+      if (el.original === currentImage) {
+        if (id === 0) {
+          acc = arr[arr.length - 1];
+        } else {
+          acc = arr[id - 1];
+        }
+      }
+      return acc;
+    }, 0);
+  } else {
+    return;
+  }
+
+  currentImage = nextImageData.original;
+  refs.modalImg.setAttribute("src", nextImageData.original);
+  refs.modalImg.setAttribute("alt", nextImageData.description);
+}
+
+// Helpers
+function openModal() {
+  refs.modal.classList.add("is-open");
+  refs.modal.addEventListener("click", handleModalCloseOnButton);
+  refs.modalOverlay.addEventListener("click", handleModalCloseOnOverlay);
+  window.addEventListener("keydown", handleModalCloseOnEsc);
+  window.addEventListener("keydown", handleModalSlider);
+}
+
+function closeModal() {
+  refs.modal.classList.remove("is-open");
+  refs.modal.removeEventListener("click", handleModalCloseOnButton);
+  refs.modalOverlay.removeEventListener("click", handleModalCloseOnOverlay);
+  window.removeEventListener("keydown", handleModalCloseOnEsc);
+
+  refs.modalImg.setAttribute("src", "");
+  refs.modalImg.setAttribute("alt", "");
+  currentImage = "";
+}
+
+refs.gallery.addEventListener("click", handleModalOpen);
