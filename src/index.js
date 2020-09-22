@@ -1,39 +1,49 @@
-import * as basicLightbox from 'basiclightbox';
-import 'basiclightbox/dist/basicLightbox.min.css';
-import Siema from 'siema';
+import './js/feedback';
 
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css';
+import posts from './posts.json';
+import postFeedItemTemplate from './templates/post-feed-item.hbs';
+import postFeedTemplate from './templates/post-feed.hbs';
 
-import Timer from './js/timer';
 import './css/styles.css';
-import './css/timer.css';
+import './css/post-feed.css';
 
-const notyf = new Notyf();
-notyf.error('Error message');
-notyf.success('Success message');
+// console.log(postFeedItemTemplate);
+// console.log(posts);
 
-const mySiema = new Siema({
-  selector: '#gallery-1',
-});
-document.querySelector('.prev').addEventListener('click', () => mySiema.prev());
-document.querySelector('.next').addEventListener('click', () => mySiema.next());
+const refs = {
+  postFeed: document.querySelector('.post-feed'),
+};
 
-const timer1 = new Timer({
-  element: document.querySelector('#timer-1'),
-  initialValue: 4,
-  step: 2,
-});
+// // создаем разметку из шаблона элемента списка
+// function buildPostFeed(posts) {
+//   const markup = posts.map(el => postFeedItemTemplate(el)).join('');
+//   refs.postFeed.insertAdjacentHTML('beforeend', markup);
+// }
+// buildPostFeed(posts);
 
-const timer2 = new Timer({
-  element: document.querySelector('#timer-2'),
-  initialValue: 10,
-  step: 5,
-});
+// // создаем разметку из шаблона списка
+const markup = postFeedTemplate(posts);
+refs.postFeed.insertAdjacentHTML('beforeend', markup);
 
-// console.log(basicLightbox);
-// const instance = basicLightbox.create(`
-// 	<h1>Dynamic Content</h1>
-// 	<p>You can set the content of the lightbox with JS.</p>
-// `);
-// instance.show();
+/*
+ * JSON methods & work with localStorage
+ */
+{
+  // const dog = {
+  //   name: 'Mango',
+  //   age: 3,
+  //   isHappy: true,
+  // };
+  // const str = JSON.stringify(dog);
+  // console.log(str);
+  // const backToObj = JSON.parse(str);
+  // console.log(backToObj);
+  // const settings = {
+  //   theme: 'dark',
+  //   mode: 'grid',
+  // };
+  // localStorage.setItem('settings', JSON.stringify(settings));
+  // const persistedSettings = localStorage.getItem('settings');
+  // const parsedSettings = JSON.parse(persistedSettings);
+  // console.log(parsedSettings);
+}
