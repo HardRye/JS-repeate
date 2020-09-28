@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --watch db.json --port 1234 --delay 200"
+  },
+  "keywords": [],
+  "author": "Nikolay Mykhailenko <nikolaimihail@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^0.16.1"
+  }
+}
