@@ -16,7 +16,11 @@ function inputHandler(e) {
   clearCountryList();
 
   // console.log(e);
-  const inputValue = e.target.value;
+  const inputValue = e.target.value.trim();
+  if (!inputValue) {
+    return;
+  }
+
   e.target.value = '';
 
   fetchCountries(inputValue)
