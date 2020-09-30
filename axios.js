@@ -1,4 +1,4 @@
-axios.defaults.baseURL = "http://localhost:4040";
+axios.defaults.baseURL = "http://localhost:1234";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.get["Accept"] = "application/json";
 axios.defaults.headers.common["Authorization"] = `Beared jqueryismyjam`;
@@ -7,6 +7,30 @@ const fetchUsers = () => {
   return axios.get("/users").then(console.log).catch(console.warn);
 };
 
+const asyncFetchUsers = async () => {
+  try {
+    const responce = await axios.get("/users1");
+    return responce.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// asyncFetchUsers().then(console.log);
+
+const updateUI = () => {
+  asyncFetchUsers()
+    .then((users) => {
+      console.log(users);
+    })
+    .catch((error) => {
+      console.warn("LOG ERROR IN UPDATE UI: ", error);
+    });
+};
+
+updateUI();
+
+//-----------------------------------------------
 const fetchUserById = (userId) => {
   return axios.get(`/users/${userId}`).then(console.log).catch(console.warn);
 };
