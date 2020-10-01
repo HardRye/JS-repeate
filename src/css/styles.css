@@ -19,39 +19,20 @@ body {
   color: #212121;
 }
 
-.countryInput {
-  display: block;
-  margin: 10px auto;
-  font-size: 16px;
-}
-
-.country {
-  width: 600px;
-  margin: 0 auto;
-}
-
-.country-wrapper {
+.gallery, .stats {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  
   list-style: none;
+  margin: 0;
+  padding: 10px;
 }
 
-.country-wrapper img {
+.photo-card {
   width: 300px;
-  margin-top: 20px;
+  max-height: 400px;
 }
 
-/* PNotify styles */
-
-.pnotify {
-  position: absolute; 
-}
-
-.pnotify-container {
-  display: flex;
-}
-
-.pnotify-container .pnotify-content {
-  margin-left: 10px!important;
+.gallery-image {
+  width: 250px;
 }
